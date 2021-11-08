@@ -10,13 +10,7 @@ Server::Server(QWidget *parent)
     readSettings(); //Read setting from fconfig file in ./
     timer =new QTimer;
     timerSetting(); // this function is responsible for timer event . 
-    
-    
-    
 }
-
-
-//-----------------------------------------------------------------------------------------------------------------------------
 
 void Server::readSettings()
 {
@@ -27,17 +21,12 @@ void Server::readSettings()
     startUpSetting(myPort);
 }
 
-//----------------------------------------------------------------------------------------------------------------------------
-
 void Server::slot_response()
 {
     socket = server->nextPendingConnection();
 
     connect(socket, SIGNAL(readyRead()), this, SLOT(slot_onReadyRead()), Qt::QueuedConnection);
-    
 }
-
-//-----------------------------------------------------------------------------------------------------------------------------
 
 void Server::slot_onReadyRead()
 {
@@ -115,8 +104,6 @@ void Server::slot_onReadyRead()
    
 }
 
-//-------------------------------------------------------------------------------------------------------------------------------
-
 void Server::insertData(QString input)
 {
     QSqlQuery q (*mydb) ;
@@ -132,8 +119,6 @@ void Server::insertData(QString input)
         qDebug() << q.lastError().text();
     }
 }
-
-//------------------------------------------------------------------------------------------------------------------------------
     
 void Server::dbConnection()
 {
@@ -155,8 +140,6 @@ void Server::dbConnection()
     }
 }
 
-//---------------------------------------------------------------------------------------------------------------------------
-
 void Server::startUpSetting(int port)
 {
     server =new QTcpServer(this) ;
@@ -166,8 +149,6 @@ void Server::startUpSetting(int port)
     server->listen (QHostAddress::Any , port);
     
 }
-
-//----------------------------------------------------------------------------------------------------------------------------
 
 void Server::slot_queryTimer()
 
@@ -188,15 +169,13 @@ void Server::slot_queryTimer()
    
 }
 
-//-----------------------------------------------------------------------------------------------------------------------------
-
 void Server::timerSetting()
 {
     connect(timer,SIGNAL(timeout()),this,SLOT( slot_queryTimer()),Qt::QueuedConnection);
     timer->start(120000);
 }
 
-//----------------------------------------------------------------------------------------------------------------------------
+
 
 Server::~Server()
 {
